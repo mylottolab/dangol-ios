@@ -28,6 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure(options: o)
         // 애플 결제 — 앱이 꺼진 사이 끝난 결제도 여기서 받습니다
         AliasStore.shared.start()
+        // 🔧 2026-11-16 화면(웹)에 결제 창구(AliasNative) 붙이기 — 장면(Scene) 방식 앱은 applicationDidBecomeActive 가
+        //    불리지 않을 수 있어서, 켜질 때 바로 붙이고(화면이 준비될 때까지 0.5초마다 다시 시도) 앱이 다시 앞으로 올 때마다 확인합니다.
+        DangolWeb.shared.attachWeb()
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { _ in
+            DangolWeb.shared.attachWeb()
+        }
         return true
     }
 
