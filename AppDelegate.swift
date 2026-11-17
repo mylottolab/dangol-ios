@@ -102,6 +102,7 @@ final class DangolWeb: NSObject, WKScriptMessageHandler {
       window.AliasNative = {
         isIOS: function(){ return true; },
         appKind: function(){ return 'dangol'; },
+        canCall: function(){ return true; },   // 📞 1.1 — 마이크 권한 문구가 들어간 앱(옛 1.0 은 마이크를 켜면 꺼짐)
         storeBuy: function(sku){ post({ act: 'storeBuy', sku: String(sku || ''), account: account() }); },
         storeConsume: function(token){ post({ act: 'storeConsume', token: String(token || '') }); },
         storeFlush: function(){ post({ act: 'storeFlush' }); },
