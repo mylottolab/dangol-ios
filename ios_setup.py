@@ -40,8 +40,9 @@ d['UIRequiredDeviceCapabilities'] = ['arm64']
 d['UISupportedInterfaceOrientations'] = ['UIInterfaceOrientationPortrait']
 d.pop('UISupportedInterfaceOrientations~ipad', None)
 d['UIBackgroundModes'] = ['remote-notification']   # 단골창구: 알림만 (전화 · 소리 없음)
-d['NSCameraUsageDescription'] = '가게 사진을 찍어 올릴 때 카메라를 씁니다.'
-d['NSPhotoLibraryUsageDescription'] = '가게 사진을 올리려면 사진 보관함을 엽니다.'
+d['NSCameraUsageDescription'] = '가게 사진 · 손님 문의 사진을 찍거나 영상 통화를 할 때 카메라를 씁니다.'
+d['NSPhotoLibraryUsageDescription'] = '가게 사진이나 문의에 붙일 사진 · 동영상을 고를 때 사진 보관함을 엽니다.'
+d['NSMicrophoneUsageDescription'] = '손님 · 사장님과 번호 없이 통화하거나 동영상을 찍을 때 마이크를 씁니다.'   # 📞 2026-11-17 실용형 · 프리미엄형 통화
 plistlib.dump(d, open(p, 'wb'))
 
 p = 'ios/App/App.xcodeproj/project.pbxproj'
@@ -52,7 +53,7 @@ if 'CODE_SIGN_ENTITLEMENTS' not in s:
     s = s.replace(key, key + '\t\t\t\tCODE_SIGN_ENTITLEMENTS = App/App.entitlements;\n')
 s = s.replace('TARGETED_DEVICE_FAMILY = "1,2";', 'TARGETED_DEVICE_FAMILY = 1;')
 # 🔴 2026-10-18 — 앱 버전(App Store 에 보이는 번호). 1.0 심사 통과 뒤 첫 업데이트 = 1.1
-APP_VERSION = '1.0'   # 🏪 단골창구 첫 출시
+APP_VERSION = '1.1'   # 📞 1.1 — 사진 · 통화(마이크 권한)
 s = re.sub(r'MARKETING_VERSION = [^;]+;', 'MARKETING_VERSION = ' + APP_VERSION + ';', s)
 open(p, 'w').write(s)
 print(APP_NAME + ' iOS 설정을 넣었습니다 (' + APP_ID + ')')
